@@ -29,13 +29,8 @@ module Split
       end
 
       if block_given?
-        if defined?(capture) # a block in a rails view
-          block = Proc.new { yield(alternative, (trial.metadata if trial)) }
-          concat(capture(alternative, &block))
-          false
-        else
-          yield(alternative, (trial.metadata if trial))
-        end
+        metadata = trial ? trial.metadata : {}
+        yield(alternative, metadata)
       else
         alternative
       end
